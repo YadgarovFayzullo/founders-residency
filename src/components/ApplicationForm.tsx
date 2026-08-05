@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
 import {
   TextField,
   TextAreaField,
@@ -7,6 +7,7 @@ import {
   TagInput,
 } from './fields'
 import { Countdown } from './Countdown'
+import { Confetti } from './Confetti'
 import {
   AlertIcon,
   ArrowIcon,
@@ -83,7 +84,20 @@ export function ApplicationForm() {
   const [skillDraft, setSkillDraft] = useState('')
   const [submitState, setSubmitState] = useState<SubmitState>('idle')
   const [submitError, setSubmitError] = useState<string>()
+  /** Dev-only: bumping this remounts <Confetti/> so the burst can replay. */
+  const [burst, setBurst] = useState(0)
   const formRef = useRef<HTMLFormElement>(null)
+  const successRef = useRef<HTMLDivElement>(null)
+
+  /**
+   * Swapping the tall form for the short success card shrinks the document,
+   * so the browser clamps the scroll position — landing on the footer. Pull
+   * the card back into view after commit, before the browser paints.
+   */
+  useLayoutEffect(() => {
+    if (submitState !== 'success') return
+    successRef.current?.scrollIntoView({ block: 'start', behavior: 'instant' })
+  }, [submitState])
 
   const set = <K extends FieldName>(name: K, value: FormValues[K]) => {
     const next = { ...values, [name]: value }
@@ -189,16 +203,18 @@ export function ApplicationForm() {
 
   if (submitState === 'success') {
     return (
-      <div className="success" role="status">
+      <div className="success" role="status" ref={successRef}>
+        <Confetti />
         <span className="success-icon">
           <CheckCircleIcon />
         </span>
         <h2 className="success-title">Arizangiz qabul qilindi</h2>
         <p className="success-text">
-          Rahmat, {values.fullName.trim().split(' ')[0]}. Jamoamiz arizangizni
-          koʻrib chiqadi va <strong>{RESPONSE_HOURS} soat ichida</strong>{' '}
+          Rahmat, {values.fullName.trim().split(' ')[0] || 'asoschi'}. Jamoamiz
+          arizangizni koʻrib chiqadi va{' '}
+          <strong>{RESPONSE_HOURS} soat ichida</strong>{' '}
           <span className="success-handle">
-            @{normalizeUsername(values.username)}
+            @{normalizeUsername(values.username) || 'username'}
           </span>{' '}
           manziliga javob yozadi.
         </p>
@@ -216,6 +232,27 @@ export function ApplicationForm() {
           Javob kelmasa, spam papkasini va Telegram’dagi “Message requests”
           boʻlimini tekshiring.
         </p>
+
+        {import.meta.env.DEV && (
+          <div className="dev-tools">
+            <span className="dev-tools-label">dev</span>
+            <button
+              type="button"
+              className="dev-button"
+              onClick={() => setBurst((n) => n + 1)}
+            >
+              Konfetti qayta
+            </button>
+            <button
+              type="button"
+              className="dev-button"
+              onClick={() => setSubmitState('idle')}
+            >
+              Formaga qaytish
+            </button>
+          </div>
+        )}
+        {burst > 0 && <Confetti key={burst} />}
       </div>
     )
   }
@@ -423,7 +460,28 @@ export function ApplicationForm() {
           </p>
         )}
         <Countdown />
+
+        {import.meta.env.DEV && (
+          <div className="dev-tools">
+            <span className="dev-tools-label">dev</span>
+            <button
+              type="button"
+              className="dev-button"
+              onClick={() => setBurst((n) => n + 1)}
+            >
+              Konfetti
+            </button>
+            <button
+              type="button"
+              className="dev-button"
+              onClick={() => setSubmitState('success')}
+            >
+              Success ekrani
+            </button>
+          </div>
+        )}
       </div>
+      {burst > 0 && <Confetti key={burst} />}
     </form>
   )
 }

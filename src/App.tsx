@@ -17,7 +17,7 @@ const PILLARS = [
   {
     index: '02',
     title: 'Jamoa',
-    text: 'Loyihaga mahsulot, dizayn, muhandislik va oʻsish boʻyicha umumiy jamoa biriktiriladi. Kichik, hisobdor va ijroga yoʻnaltirilgan venchur jamoasi.',
+    text: 'Loyihaga mahsulot, dizayn, muhandislik va oʻsish boʻyicha umumiy jamoa biriktiriladi. Kichik, hisobdor va ijroga yoʻnaltirilgan venture builder jamoasi.',
     meta: '1–3 asoschi',
   },
   {
@@ -28,7 +28,7 @@ const PILLARS = [
   },
   {
     index: '04',
-    title: 'Go-to-market',
+    title: 'Go To Market',
     text: 'Tayyor tarqatish strategiyasi: maqsadli mijoz, kanal, savdo jarayoni, narx va haftalik nishonlar. Birinchi toʻlovchi mijozlargacha yoningizdamiz.',
     meta: 'Birinchi kundan',
   },
@@ -74,8 +74,8 @@ export default function App() {
               <span className="hero-highlight">Founders</span> Residency
             </h1>
             <p className="hero-lead">
-              G‘oyani, jamoani va go-to-market’ni biz beramiz. Siz —
-              asoschisiz.
+              G‘oyani, jamoani va Go To Market’ni biz beramiz — siz
+              qurasiz.
             </p>
             <p className="hero-context">
               Startup Garage — venchur qurish studiyasi. 2024-yildan beri 400
@@ -105,7 +105,7 @@ export default function App() {
               <span className="pillars-eyebrow">Dastur haqida</span>
               <h2 className="pillars-title">
                 Loyihani <span className="accent">biz beramiz</span> — siz
-                quryapsiz
+                qurasiz
               </h2>
               <p className="pillars-lead">
                 Founders Residency startapdan emas, asoschidan boshlanadi.

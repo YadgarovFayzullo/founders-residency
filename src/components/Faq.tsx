@@ -3,7 +3,7 @@ import { useState } from 'react'
 const ITEMS = [
   {
     q: 'Gʻoyani va jamoani kim beradi?',
-    a: 'Startup Garage. Biz Imkoniyatlar kutubxonasini yuritamiz: har bir yoʻnalish muammo bayoni, maqsadli mijoz, bozor hajmi, daromad salohiyati va xavflari bilan brif qilib tayyorlanadi. Sizga tekshirilgan imkoniyat, mahsulot va oʻsish boʻyicha umumiy jamoa hamda tayyor go-to-market rejasi topshiriladi; venchur jamoasi bir–uch asoschidan iborat boʻladi. Oʻz gʻoyangiz boʻlsa — u ham xuddi shu tekshiruvdan oʻtadi.',
+    a: 'Startup Garage. Biz Imkoniyatlar kutubxonasini yuritamiz: har bir yoʻnalish muammo bayoni, maqsadli mijoz, bozor hajmi, daromad salohiyati va xavflari bilan brif qilib tayyorlanadi. Sizga tekshirilgan imkoniyat, mahsulot va oʻsish boʻyicha umumiy jamoa hamda tayyor Go To Market rejasi topshiriladi; venchur jamoasi bir–uch asoschidan iborat boʻladi. Oʻz gʻoyangiz boʻlsa — u ham xuddi shu tekshiruvdan oʻtadi.',
   },
   {
     q: 'Rezidensiya qancha davom etadi?',

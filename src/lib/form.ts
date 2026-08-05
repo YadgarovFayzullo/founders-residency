@@ -1,15 +1,21 @@
-export type Status = '' | 'study' | 'work'
+/** Current occupation — a founder may study, work, both, or neither. */
+export type Status = 'study' | 'work' | 'none'
+
+/** §5.2 — the programme screens for availability and full commitment. */
+export type Commitment = '' | 'full' | 'partial'
 
 export type FormValues = {
   fullName: string
   phone: string
   username: string
   bio: string
-  status: Status
+  statuses: Status[]
   faculty: string
   workplace: string
   city: string
   skills: string[]
+  portfolio: string
+  commitment: Commitment
   motivation: string
 }
 
@@ -18,6 +24,8 @@ export type FormErrors = Partial<Record<FieldName, string>>
 
 export const BIO_MIN = 40
 export const BIO_MAX = 400
+export const PORTFOLIO_MIN = 40
+export const PORTFOLIO_MAX = 600
 export const MOTIVATION_MIN = 80
 export const MOTIVATION_MAX = 1000
 
@@ -26,11 +34,13 @@ export const emptyForm: FormValues = {
   phone: '',
   username: '',
   bio: '',
-  status: '',
+  statuses: [],
   faculty: '',
   workplace: '',
   city: '',
   skills: [],
+  portfolio: '',
+  commitment: '',
   motivation: '',
 }
 
@@ -88,15 +98,15 @@ export function validateField(
       if (v.length < BIO_MIN) return `Kamida ${BIO_MIN} belgi — hozir ${v.length}`
       return
     }
-    case 'status':
-      if (!values.status) return 'Hozirgi holatingizni tanlang'
+    case 'statuses':
+      if (values.statuses.length === 0) return 'Kamida bitta variantni tanlang'
       return
     case 'faculty':
-      if (values.status === 'study' && !values.faculty.trim())
+      if (values.statuses.includes('study') && !values.faculty.trim())
         return 'Qaysi OTM va fakultetda oʻqiyotganingizni yozing'
       return
     case 'workplace':
-      if (values.status === 'work' && !values.workplace.trim())
+      if (values.statuses.includes('work') && !values.workplace.trim())
         return 'Qayerda ishlayotganingizni yozing'
       return
     case 'city': {
@@ -108,6 +118,16 @@ export function validateField(
     case 'skills':
       if (values.skills.length === 0) return 'Kamida bitta koʻnikma qoʻshing'
       return
+    case 'portfolio': {
+      const v = values.portfolio.trim()
+      if (!v) return 'Nima qurgan boʻlsangiz — shuni yozing'
+      if (v.length < PORTFOLIO_MIN)
+        return `Kamida ${PORTFOLIO_MIN} belgi — hozir ${v.length}`
+      return
+    }
+    case 'commitment':
+      if (!values.commitment) return 'Bandligingizni tanlang'
+      return
     case 'motivation': {
       const v = values.motivation.trim()
       if (!v) return 'Bu savolga javob bering'
@@ -118,18 +138,18 @@ export function validateField(
   }
 }
 
-/** Fields that are actually on screen for the current status. */
+/** Fields that are actually on screen for the current answers. */
 export function activeFields(values: FormValues): FieldName[] {
   const fields: FieldName[] = [
     'fullName',
     'phone',
     'username',
     'bio',
-    'status',
+    'statuses',
   ]
-  if (values.status === 'study') fields.push('faculty')
-  if (values.status === 'work') fields.push('workplace')
-  return [...fields, 'city', 'skills', 'motivation']
+  if (values.statuses.includes('study')) fields.push('faculty')
+  if (values.statuses.includes('work')) fields.push('workplace')
+  return [...fields, 'city', 'skills', 'portfolio', 'commitment', 'motivation']
 }
 
 export function validateAll(values: FormValues): FormErrors {

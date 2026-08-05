@@ -31,7 +31,11 @@
 /* ── Top bar ────────────────────────────────────────────────────────── */
 
 .topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
   border-bottom: 1px solid var(--gray-line);
+  background: var(--white);
 }
 
 .topbar-inner {
@@ -255,6 +259,218 @@
   white-space: nowrap;
 }
 
+.pillars-lead,
+.phases-lead,
+.steps-lead {
+  max-width: 58ch;
+  margin-top: 20px;
+  color: var(--gray);
+  font-size: 1.06rem;
+  line-height: 1.65;
+}
+
+/* ── Phases ─────────────────────────────────────────────────────────── */
+
+.phases {
+  padding: 96px 0;
+}
+
+.phases-eyebrow {
+  display: block;
+  color: var(--primary);
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.phases-title {
+  margin-top: 14px;
+  max-width: 20ch;
+  font-size: clamp(2rem, 5.5vw, 3.2rem);
+  font-variation-settings: 'wght' 700;
+  letter-spacing: -0.035em;
+}
+
+.phases-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 56px;
+  padding: 0;
+  list-style: none;
+}
+
+.phase {
+  display: flex;
+  flex-direction: column;
+  padding: 26px 26px 30px;
+  border: 1px solid var(--gray-line);
+  border-radius: var(--radius);
+  transition: border-color 0.15s ease;
+}
+
+.phase:hover {
+  border-color: var(--primary-line);
+}
+
+/* Six ticks per card, filled up to the card's own stage. */
+.phase-meter {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 4px;
+}
+
+.phase-tick {
+  height: 4px;
+  border-radius: 2px;
+  background: var(--gray-line);
+}
+
+.phase-tick.is-filled {
+  background: var(--primary);
+}
+
+.phase-index {
+  margin-top: 22px;
+  color: var(--primary);
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.phase-title {
+  margin-top: 6px;
+  font-size: 1.35rem;
+  letter-spacing: -0.03em;
+}
+
+.phase-text {
+  margin-top: 10px;
+  color: var(--gray);
+  font-size: 0.98rem;
+  line-height: 1.6;
+}
+
+/* ── The loop ───────────────────────────────────────────────────────── */
+
+.loop {
+  margin-top: 20px;
+  padding: 36px 34px;
+  border-radius: var(--radius);
+  background: var(--gray-bg);
+}
+
+.loop-label,
+.rhythm-label {
+  display: block;
+  color: var(--primary);
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.loop-flow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 22px;
+  padding: 0;
+  list-style: none;
+}
+
+.loop-node {
+  display: inline-flex;
+  align-items: center;
+  padding: 11px 16px;
+  border-radius: var(--radius);
+  background: var(--white);
+  font-size: 0.98rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  white-space: nowrap;
+}
+
+.loop-node::after {
+  content: '→';
+  margin: 0 -4px 0 12px;
+  color: var(--primary);
+  font-weight: 500;
+}
+
+.loop-node:last-child::after {
+  content: none;
+}
+
+.loop-node.is-repeat {
+  background: var(--primary);
+  color: var(--white);
+}
+
+.loop-quote {
+  max-width: 62ch;
+  margin: 28px 0 0;
+  padding-left: 20px;
+  border-left: 3px solid var(--primary);
+  color: var(--gray);
+  font-size: 1.15rem;
+  line-height: 1.55;
+  letter-spacing: -0.015em;
+}
+
+.loop-quote strong {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+/* ── Weekly rhythm ──────────────────────────────────────────────────── */
+
+.rhythm {
+  margin-top: 20px;
+  padding: 36px 34px;
+  border: 1px solid var(--gray-line);
+  border-radius: var(--radius);
+}
+
+.rhythm-list {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  margin-top: 24px;
+  padding: 0;
+  list-style: none;
+}
+
+.rhythm-item {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 20px 18px;
+  border-radius: var(--radius);
+  background: var(--gray-bg);
+}
+
+.rhythm-index {
+  color: var(--primary);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.rhythm-day {
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+.rhythm-focus {
+  color: var(--gray);
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
 /* ── Steps ──────────────────────────────────────────────────────────── */
 
 .steps {
@@ -280,7 +496,7 @@
 
 .steps-list {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 24px;
   margin-top: 56px;
   padding: 0;
@@ -624,6 +840,29 @@
   border: 6px solid var(--primary);
 }
 
+/* Checkboxes share the radio shell, squared off with a tick instead. */
+.radio-check .radio-mark {
+  display: grid;
+  place-items: center;
+  border-radius: 7px;
+}
+
+.radio-check.is-checked .radio-mark {
+  border: 1px solid var(--primary);
+  background: var(--primary);
+}
+
+.radio-mark-icon {
+  width: 14px;
+  height: 14px;
+  color: var(--white);
+  opacity: 0;
+}
+
+.radio-check.is-checked .radio-mark-icon {
+  opacity: 1;
+}
+
 .radio.is-error {
   border-width: 2px;
   border-color: var(--primary);
@@ -806,6 +1045,17 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.submit-error {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: -8px;
+  color: var(--primary);
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-align: center;
 }
 
 /* ── Countdown ──────────────────────────────────────────────────────── */
@@ -1086,8 +1336,9 @@
 
 .footer-contact {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 14px;
+  line-height: 1.45;
   padding: 18px 22px;
   border-radius: var(--radius);
   background: var(--gray-bg);
@@ -1114,8 +1365,42 @@
 
 .footer-cols {
   display: grid;
-  grid-template-columns: 1fr 1.25fr;
-  gap: 28px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.footer-branches {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 24px;
+  padding-top: 22px;
+  border-top: 1px solid var(--gray-line);
+}
+
+.footer-branches-label {
+  color: var(--gray-soft);
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.footer-branches-list {
+  font-size: 1.02rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+.footer-legal {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 32px;
+  color: var(--gray-soft);
+  font-size: 0.88rem;
 }
 
 .footer-col-title {
@@ -1142,50 +1427,26 @@
   text-decoration: none;
 }
 
-.footer-date {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  font-size: 1.05rem;
-}
-
-.footer-date-label {
-  color: var(--gray-soft);
-  font-size: 0.88rem;
-}
-
-.footer-date-value {
-  color: var(--ink);
-  font-weight: 500;
-}
-
-.footer-address {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  margin-top: auto;
-  padding-top: 36px;
-  color: var(--primary);
-  font-size: 1.05rem;
-  font-weight: 500;
-  line-height: 1.5;
-}
-
-.footer-address:hover {
-  text-decoration: none;
-  opacity: 0.8;
-}
-
-.footer-address-icon {
-  flex: none;
-  width: 20px;
-  height: 20px;
-  margin-top: 1px;
-}
-
 /* ── Responsive ─────────────────────────────────────────────────────── */
 
 @media (max-width: 900px) {
+  .phases {
+    padding: 72px 0;
+  }
+
+  .phases-list,
+  .rhythm-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .steps-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .footer-cols {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
   .faq {
     padding: 72px 0;
   }
@@ -1207,8 +1468,7 @@
     padding: 28px 24px;
   }
 
-  .footer-contacts,
-  .footer-address {
+  .footer-contacts {
     padding-top: 24px;
   }
 
@@ -1262,8 +1522,24 @@
     text-align: center;
   }
 
-  .steps-list {
+  .steps-list,
+  .phases-list,
+  .rhythm-list {
     grid-template-columns: 1fr;
+  }
+
+  .loop,
+  .rhythm {
+    padding: 28px 22px;
+  }
+
+  .loop-node {
+    font-size: 0.92rem;
+    padding: 9px 13px;
+  }
+
+  .loop-quote {
+    font-size: 1.05rem;
   }
 
   .pillars {

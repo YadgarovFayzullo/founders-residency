@@ -231,6 +231,72 @@ export function RadioGroup<T extends string>({
   )
 }
 
+/* ── Checkbox group ─────────────────────────────────────────────────── */
+
+type CheckboxGroupProps<T extends string> = {
+  label: string
+  hint?: string
+  value: readonly T[]
+  options: readonly RadioOption<T>[]
+  onChange: (value: T) => void
+  error?: string
+}
+
+export function CheckboxGroup<T extends string>({
+  label,
+  hint,
+  value,
+  options,
+  onChange,
+  error,
+}: CheckboxGroupProps<T>) {
+  const id = useId()
+  return (
+    <fieldset
+      className="field"
+      aria-describedby={error ? `${id}-error` : undefined}
+    >
+      <legend className="field-label">{label}</legend>
+      {hint && !error && <p className="field-hint">{hint}</p>}
+      <div className="radio-row">
+        {options.map((option) => {
+          const checked = value.includes(option.value)
+          return (
+            <label
+              key={option.value}
+              className={`radio radio-check${checked ? ' is-checked' : ''}${
+                error ? ' is-error' : ''
+              }`}
+            >
+              <input
+                type="checkbox"
+                value={option.value}
+                checked={checked}
+                onChange={() => onChange(option.value)}
+              />
+              <span className="radio-mark" aria-hidden="true">
+                <CheckIcon className="radio-mark-icon" />
+              </span>
+              <span className="radio-text">
+                <span className="radio-title">{option.label}</span>
+                <span className="radio-note">{option.note}</span>
+              </span>
+            </label>
+          )
+        })}
+      </div>
+      <div className="field-foot">
+        {error && (
+          <p className="field-error" id={`${id}-error`} role="alert">
+            <AlertIcon className="msg-icon" />
+            {error}
+          </p>
+        )}
+      </div>
+    </fieldset>
+  )
+}
+
 /* ── Tag input for hard skills ──────────────────────────────────────── */
 
 type TagInputProps = {

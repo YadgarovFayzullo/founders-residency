@@ -1,11 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
 import { DEADLINE_LABEL } from '../lib/form'
 
+/** §5.2 — the founder selection funnel. */
 const STEPS = [
   { title: 'Ariza', text: `${DEADLINE_LABEL}gacha ochiq` },
-  { title: 'Suhbat', text: '15 daqiqalik onlayn suhbat' },
-  { title: 'Rezidentura', text: 'Toshkentda 8 hafta' },
-  { title: 'Demo Day', text: 'Yakuniy taqdimot' },
+  { title: 'Asoschi sinovi', text: '7 kunlik amaliy topshiriq' },
+  { title: 'Suhbat', text: 'Motivatsiya, halollik, oʻrganish' },
+  { title: 'Baholash', text: '100 balldan minimal 75' },
+  { title: 'Majburiyat', text: 'Shartnoma va kogortaga qoʻshilish' },
 ]
 
 const DWELL_MS = 1900
@@ -56,8 +58,12 @@ export function Steps() {
       <div className="steps-head">
         <span className="steps-eyebrow">Qabul jarayoni</span>
         <h2 className="steps-title">
-          Arizadan <span className="accent">Demo Day</span>gacha
+          Biz avval <span className="accent">asoschini</span> tanlaymiz
         </h2>
+        <p className="steps-lead">
+          Startup Garage startapni baholashdan oldin asoschini baholaydi.
+          Taqdimot sifati emas — harakat sinovdan oʻtadi.
+        </p>
       </div>
       <ol className="steps-list">
         {STEPS.map((step, index) => {

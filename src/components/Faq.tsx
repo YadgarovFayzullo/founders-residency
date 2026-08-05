@@ -2,24 +2,24 @@ import { useState } from 'react'
 
 const ITEMS = [
   {
-    q: 'Dasturda qatnashish bepulmi?',
-    a: 'Ha, ishtirok butunlay bepul. Startup Garage rezidentlardan toʻlov ham, ulush ham olmaydi — dastur homiylar hisobidan moliyalashtiriladi.',
+    q: 'Gʻoyani va jamoani kim beradi?',
+    a: 'Startup Garage. Biz Imkoniyatlar kutubxonasini yuritamiz: har bir yoʻnalish muammo bayoni, maqsadli mijoz, bozor hajmi, daromad salohiyati va xavflari bilan brif qilib tayyorlanadi. Sizga tekshirilgan imkoniyat, mahsulot va oʻsish boʻyicha umumiy jamoa hamda tayyor go-to-market rejasi topshiriladi; venchur jamoasi bir–uch asoschidan iborat boʻladi. Oʻz gʻoyangiz boʻlsa — u ham xuddi shu tekshiruvdan oʻtadi.',
   },
   {
-    q: 'Tayyor gʻoyam boʻlmasa ham topshirsam boʻladimi?',
-    a: 'Boʻladi. Rezidentlarning qariyb yarmi dasturga aniq gʻoyasiz keladi — birinchi ikki hafta aynan muammoni topish va tekshirishga ajratilgan.',
+    q: 'Rezidensiya qancha davom etadi?',
+    a: 'Maksimal 12 oy. Har uch oyda samaradorlik nazorat nuqtasi, har toʻrt haftada esa kengaytirish, yoʻnalishni oʻzgartirish yoki toʻxtatish boʻyicha rasmiy qaror. Bitirish dastur muddatiga emas, dalilga asoslanadi.',
   },
   {
-    q: 'Ariza koʻrib chiqilishi qancha vaqt oladi?',
-    a: 'Arizangizni 48 soat ichida koʻrib chiqamiz va javobni siz koʻrsatgan Telegram yoki Instagram manziliga yozamiz. Keyingi bosqich — 15 daqiqalik onlayn suhbat.',
+    q: 'Ulush va shartnoma qanday?',
+    a: 'Qabul qilingan asoschilar Asoschi majburiyat shartnomasini imzolaydi: qatnashish, haftalik hisobot, maxfiylik, intellektual mulk, ulush shartlari, axloqiy meʼyorlar va minimal ijro talablari. Aniq shartlar suhbat bosqichida ochiq muhokama qilinadi.',
   },
   {
-    q: 'Jadval qanday tuzilgan?',
-    a: 'Haftasiga uch kun Toshkentdagi maydonchada birgalikda ishlaymiz, qolgan kunlar mustaqil. Har juma — mentor bilan yakuniy uchrashuv va haftalik natijalar taqdimoti.',
+    q: 'Texnik boʻlmasam ham boʻladimi?',
+    a: 'Boʻladi. Ikki haftalik vibe coding intensivi har bir asoschini mahsulot spetsifikatsiyasi, AI prompting, frontend, backend, integratsiyalar, deployment va analitikadan oʻtkazadi; bitirish talabi — ishlaydigan mahsulotni qurib, joylashtirish. Buning evaziga sizdan haftalik hisobot, juma kunidagi namoyish va kunlik besh harakat talab qilinadi: mijoz bilan gaplashish, mahsulotni yaxshilash, sotish, koʻrsatkichlarni koʻrib chiqish va oʻrganilganni hujjatlashtirish. Mijoz bilan gaplashishdan yoki sotishdan doimiy bosh tortish — chetlatish sababi.',
   },
   {
-    q: 'Toshkentda yashamasam-chi?',
-    a: 'Rezidentura oflayn oʻtadi. Boshqa viloyatdan keladigan jamoalar uchun 8 hafta davomida turar joy bilan yordam beramiz — arizada shuni yozib qoldiring.',
+    q: 'Startapim toʻxtatilsa, dasturdan chiqamanmi?',
+    a: 'Yoʻq. Asoschi post-mortemdan oʻtadi: qaysi taxminlar notoʻgʻri edi, qaysi dalillar eʼtiborsiz qoldi, nima keraksiz qurildi. Soʻng ball jadvali yangilanadi, yangi imkoniyat tanlanadi va yangi sikl boshlanadi. Bu — dasturning asosiy mexanizmi.',
   },
 ]
 

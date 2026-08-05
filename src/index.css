@@ -40,6 +40,17 @@
   margin: 0;
 }
 
+/* Anchor targets clear the sticky top bar (~89px tall). */
+html {
+  scroll-padding-top: 104px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
 body {
   min-height: 100svh;
   background: var(--white);

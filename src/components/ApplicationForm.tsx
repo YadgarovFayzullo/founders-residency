@@ -1,12 +1,28 @@
 import { useRef, useState } from 'react'
-import { TextField, TextAreaField, RadioGroup, TagInput } from './fields'
+import {
+  TextField,
+  TextAreaField,
+  RadioGroup,
+  CheckboxGroup,
+  TagInput,
+} from './fields'
 import { Countdown } from './Countdown'
-import { ArrowIcon, AtIcon, CheckCircleIcon, PhoneIcon, PinIcon, UserIcon } from './icons'
+import {
+  AlertIcon,
+  ArrowIcon,
+  AtIcon,
+  CheckCircleIcon,
+  PhoneIcon,
+  PinIcon,
+  UserIcon,
+} from './icons'
 import {
   BIO_MAX,
   BIO_MIN,
   MOTIVATION_MAX,
   MOTIVATION_MIN,
+  PORTFOLIO_MAX,
+  PORTFOLIO_MIN,
   RESPONSE_HOURS,
   emptyForm,
   formatPhone,
@@ -14,25 +30,49 @@ import {
   validateAll,
   validateField,
   type FieldName,
+  type Commitment,
   type FormErrors,
   type FormValues,
   type Status,
 } from '../lib/form'
+import { submitApplication } from '../lib/submit'
 
 const STATUS_OPTIONS = [
   { value: 'study', label: 'Oʻqiyman', note: 'Universitet yoki kollejda' },
   { value: 'work', label: 'Ishlayman', note: 'Kompaniya yoki oʻz ishim' },
+  {
+    value: 'none',
+    label: 'Hozircha yoʻq',
+    note: 'Oʻqimayman ham, ishlamayman ham',
+  },
 ] as const satisfies readonly { value: Status; label: string; note: string }[]
+
+const COMMITMENT_OPTIONS = [
+  {
+    value: 'full',
+    label: 'Toʻliq vaqt',
+    note: 'Rezidensiyaga toʻliq jalb boʻlaman',
+  },
+  {
+    value: 'partial',
+    label: 'Qisman',
+    note: 'Haftasiga bir necha kun ajrata olaman',
+  },
+] as const satisfies readonly {
+  value: Exclude<Commitment, ''>
+  label: string
+  note: string
+}[]
 
 const SKILL_SUGGESTIONS = [
   'Figma',
   'React',
   'Python',
   'Sotuv',
-  'SMM',
+  'AI vositalari',
   'No-code',
   'Data analiz',
-  'Copywriting',
+  'Marketing',
 ] as const
 
 type SubmitState = 'idle' | 'submitting' | 'success'
@@ -43,6 +83,7 @@ export function ApplicationForm() {
   const [touched, setTouched] = useState<Partial<Record<FieldName, boolean>>>({})
   const [skillDraft, setSkillDraft] = useState('')
   const [submitState, setSubmitState] = useState<SubmitState>('idle')
+  const [submitError, setSubmitError] = useState<string>()
   const formRef = useRef<HTMLFormElement>(null)
 
   const set = <K extends FieldName>(name: K, value: FormValues[K]) => {
@@ -60,14 +101,25 @@ export function ApplicationForm() {
     setErrors((e) => ({ ...e, [name]: validateField(name, values) }))
   }
 
-  const pickStatus = (status: Status) => {
-    setValues((prev) => ({
-      ...prev,
-      status,
-      faculty: status === 'study' ? prev.faculty : '',
-      workplace: status === 'work' ? prev.workplace : '',
-    }))
-    setErrors((e) => ({ ...e, status: undefined }))
+  /**
+   * Study and work can both be true; "none" is exclusive with either, so
+   * picking it clears the others and vice versa.
+   */
+  const toggleStatus = (status: Status) => {
+    const current = values.statuses
+    const next = current.includes(status)
+      ? current.filter((s) => s !== status)
+      : status === 'none'
+        ? ['none' as Status]
+        : [...current.filter((s) => s !== 'none'), status]
+
+    setValues({
+      ...values,
+      statuses: next,
+      faculty: next.includes('study') ? values.faculty : '',
+      workplace: next.includes('work') ? values.workplace : '',
+    })
+    setErrors((e) => ({ ...e, statuses: next.length ? undefined : e.statuses }))
   }
 
   const errorOf = (name: FieldName) => (touched[name] ? errors[name] : undefined)
@@ -109,15 +161,31 @@ export function ApplicationForm() {
     }
 
     setSubmitState('submitting')
-    const payload = {
-      ...submitted,
-      username: normalizeUsername(submitted.username),
-      submittedAt: new Date().toISOString(),
+    setSubmitError(undefined)
+
+    try {
+      await submitApplication({
+        ...submitted,
+        username: normalizeUsername(submitted.username),
+        statusLabel: STATUS_OPTIONS.filter((option) =>
+          submitted.statuses.includes(option.value),
+        )
+          .map((option) => option.label)
+          .join(', '),
+        commitmentLabel:
+          COMMITMENT_OPTIONS.find(
+            (option) => option.value === submitted.commitment,
+          )?.label ?? '',
+        submittedAt: new Date().toISOString(),
+      })
+      setSubmitState('success')
+    } catch (error) {
+      console.error('Application submit failed', error)
+      setSubmitError(
+        'Arizani yuborib boʻlmadi. Internetni tekshirib, qaytadan urining.',
+      )
+      setSubmitState('idle')
     }
-    // Swap for a real endpoint — the payload shape is already final.
-    await new Promise((resolve) => setTimeout(resolve, 1400))
-    console.info('Founders Residency application', payload)
-    setSubmitState('success')
   }
 
   if (submitState === 'success') {
@@ -226,16 +294,16 @@ export function ApplicationForm() {
           rows={4}
         />
 
-        <RadioGroup
+        <CheckboxGroup
           label="Holati"
-          name="status"
-          value={values.status}
+          hint="Bir nechtasini tanlash mumkin"
+          value={values.statuses}
           options={STATUS_OPTIONS}
-          onChange={pickStatus}
-          error={errorOf('status')}
+          onChange={toggleStatus}
+          error={errorOf('statuses')}
         />
 
-        {values.status === 'study' && (
+        {values.statuses.includes('study') && (
           <div className="reveal">
             <TextField
               label="Qaysi fakultet?"
@@ -249,7 +317,7 @@ export function ApplicationForm() {
           </div>
         )}
 
-        {values.status === 'work' && (
+        {values.statuses.includes('work') && (
           <div className="reveal">
             <TextField
               label="Qayerda ishlaysiz?"
@@ -278,7 +346,7 @@ export function ApplicationForm() {
       <fieldset className="form-section" disabled={submitting}>
         <legend className="form-section-title">
           <span className="form-section-index">03</span>
-          Koʻnikma va motivatsiya
+          Ijro va motivatsiya
         </legend>
 
         <TagInput
@@ -295,8 +363,31 @@ export function ApplicationForm() {
         />
 
         <TextAreaField
+          label="Ijro dalillari"
+          hint="Nima qurgansiz, sotgansiz yoki ishga tushirgansiz? Havolalar boʻlsa — tashlang. Diplom emas, ijro muhim."
+          placeholder="Telegram bot qurdim, 400 ta foydalanuvchi… / havola"
+          value={values.portfolio}
+          onChange={(v) => set('portfolio', v)}
+          onBlur={() => blur('portfolio')}
+          error={errorOf('portfolio')}
+          valid={validOf('portfolio')}
+          min={PORTFOLIO_MIN}
+          max={PORTFOLIO_MAX}
+          rows={4}
+        />
+
+        <RadioGroup
+          label="Bandligingiz"
+          name="commitment"
+          value={values.commitment}
+          options={COMMITMENT_OPTIONS}
+          onChange={(v: Exclude<Commitment, ''>) => set('commitment', v)}
+          error={errorOf('commitment')}
+        />
+
+        <TextAreaField
           label="Nima uchun aynan siz?"
-          hint="Nimani qurmoqchisiz va rezidentura sizga nimani beradi?"
+          hint="Nimani qurmoqchisiz, nega hozir va nega siz uddalaysiz?"
           placeholder="Men oxirgi 6 oyda…"
           value={values.motivation}
           onChange={(v) => set('motivation', v)}
@@ -327,6 +418,12 @@ export function ApplicationForm() {
             </>
           )}
         </button>
+        {submitError && (
+          <p className="submit-error" role="alert">
+            <AlertIcon className="msg-icon" />
+            {submitError}
+          </p>
+        )}
         <Countdown />
       </div>
     </form>

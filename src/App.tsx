@@ -28,7 +28,7 @@ const PILLARS = [
   },
   {
     index: '04',
-    title: 'Go To Market',
+    title: 'Go-to-Market',
     text: 'Tayyor tarqatish strategiyasi: maqsadli mijoz, kanal, savdo jarayoni, narx va haftalik nishonlar. Birinchi toʻlovchi mijozlargacha yoningizdamiz.',
     meta: 'Birinchi kundan',
   },
@@ -51,7 +51,7 @@ export default function App() {
   return (
     <div className="page" id="top">
       <header className="topbar">
-        <div className="shell topbar-inner">
+        <div className="shell-wide topbar-inner">
           <a className="brand" href="#top">
             <img
               className="brand-logo"
@@ -74,7 +74,7 @@ export default function App() {
               <span className="hero-highlight">Founders</span> Residency
             </h1>
             <p className="hero-lead">
-              G‘oyani, jamoani va Go To Market’ni biz beramiz — siz
+              G‘oyani, jamoani va Go-to-Market’ni biz beramiz — siz
               qurasiz.
             </p>
             <p className="hero-context">

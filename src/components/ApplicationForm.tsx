@@ -10,7 +10,6 @@ import { Countdown } from './Countdown'
 import {
   AlertIcon,
   ArrowIcon,
-  AtIcon,
   CheckCircleIcon,
   PhoneIcon,
   PinIcon,
@@ -262,7 +261,6 @@ export function ApplicationForm() {
           hint="Telegram yoki Instagram — javobni shu manzilga yozamiz"
           placeholder="username"
           prefix="@"
-          icon={<AtIcon />}
           value={values.username}
           onChange={(v) => set('username', v.replace(/\s/g, ''))}
           onBlur={() => {

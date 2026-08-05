@@ -11,6 +11,13 @@
  * otherwise the old code keeps serving.
  */
 
+/**
+ * The "Arizalar" spreadsheet — the id is the part of its URL between
+ * /d/ and /edit. Leave it filled and the script works standalone as well as
+ * bound to the sheet; empty it to always use the sheet the script lives in.
+ */
+var SPREADSHEET_ID = '1Jg6FSdsXPsACfYMiGGmiypdj8xK4UujoxbPVoxB6Ono'
+
 var SHEET_NAME = 'Arizalar'
 
 var HEADERS = [
@@ -71,11 +78,20 @@ function doGet() {
 }
 
 function getSheet() {
-  var book = SpreadsheetApp.getActiveSpreadsheet()
+  var book = SPREADSHEET_ID
+    ? SpreadsheetApp.openById(SPREADSHEET_ID)
+    : SpreadsheetApp.getActiveSpreadsheet()
+
   var sheet = book.getSheetByName(SHEET_NAME)
 
   if (!sheet) {
-    sheet = book.insertSheet(SHEET_NAME)
+    var sheets = book.getSheets()
+    // Reuse the untouched default tab instead of leaving it empty beside ours.
+    if (sheets.length === 1 && sheets[0].getLastRow() === 0) {
+      sheet = sheets[0].setName(SHEET_NAME)
+    } else {
+      sheet = book.insertSheet(SHEET_NAME)
+    }
   }
 
   if (sheet.getLastRow() === 0) {

@@ -1,12 +1,15 @@
 import { LOGO_MAIN } from '../lib/assets'
+import { ROUTES } from '../lib/router'
+import { Link } from './Link'
 import { PhoneIcon, PinIcon } from './icons'
 
+/** Landing anchors are absolute so they also work from the apply page. */
 const PAGES = [
-  { label: 'Dastur haqida', href: '#dastur' },
-  { label: 'Bosqichlar', href: '#bosqichlar' },
-  { label: 'Qabul jarayoni', href: '#jarayon' },
-  { label: 'Savollar', href: '#faq' },
-  { label: 'Ariza', href: '#ariza' },
+  { label: 'Dastur haqida', href: '/#dastur' },
+  { label: 'Bosqichlar', href: '/#bosqichlar' },
+  { label: 'Qabul jarayoni', href: '/#jarayon' },
+  { label: 'Savollar', href: '/#faq' },
+  { label: 'Ariza', href: ROUTES.apply },
 ]
 
 const ECOSYSTEM = [
@@ -94,9 +97,9 @@ export function Footer() {
               <ul className="footer-col-list">
                 {PAGES.map((page) => (
                   <li key={page.href}>
-                    <a className="footer-link" href={page.href}>
+                    <Link className="footer-link" to={page.href}>
                       {page.label}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>

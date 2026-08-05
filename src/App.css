@@ -62,9 +62,20 @@
   height: 36px;
 }
 
-.topbar-link {
-  font-size: 1rem;
+/* Primary CTA in the bar — it now leads to a separate page. */
+.topbar-cta {
+  padding: 11px 20px;
+  border-radius: var(--radius);
+  background: var(--primary);
+  color: var(--white);
+  font-size: 0.95rem;
   font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.topbar-cta:hover {
+  text-decoration: none;
+  opacity: 0.9;
 }
 
 /* ── Hero ───────────────────────────────────────────────────────────── */
@@ -580,14 +591,71 @@
 
 /* ── Apply section ──────────────────────────────────────────────────── */
 
+/* Dedicated application page. */
 .apply {
-  scroll-margin-top: 24px;
-  padding: 56px 0 0;
-  border-top: 1px solid var(--gray-line);
+  padding: 40px 0 0;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--gray);
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.back-link:hover {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.back-icon {
+  width: 18px;
+  height: 18px;
+  transform: rotate(180deg);
 }
 
 .apply-head {
-  padding: 56px 0 8px;
+  padding: 32px 0 8px;
+}
+
+.apply-eyebrow {
+  display: block;
+  margin-bottom: 14px;
+  color: var(--primary);
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* Closing call to action at the foot of the landing page. */
+.cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 96px;
+  padding: 64px 32px;
+  border: 1px solid var(--primary-line);
+  border-radius: var(--radius);
+  text-align: center;
+}
+
+.cta-title {
+  font-size: clamp(1.7rem, 4.5vw, 2.4rem);
+  letter-spacing: -0.03em;
+}
+
+.cta-text {
+  max-width: 44ch;
+  color: var(--gray);
+  font-size: 1.06rem;
+}
+
+.cta .hero-cta {
+  margin-top: 14px;
 }
 
 .apply-lead {

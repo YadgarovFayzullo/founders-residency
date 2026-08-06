@@ -593,7 +593,7 @@
 
 /* Dedicated application page. */
 .apply {
-  padding: 40px 0 0;
+  padding: 40px 0 112px;
 }
 
 .back-link {
@@ -1709,5 +1709,14 @@
 
   .success {
     padding: 36px 22px;
+  }
+
+  .apply {
+    padding: 28px 0 80px;
+  }
+
+  .cta {
+    margin-bottom: 72px;
+    padding: 48px 24px;
   }
 }
